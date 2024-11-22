@@ -3,7 +3,9 @@ package com.gabrielcourse.chesssystemjava.application;
 import com.gabrielcourse.chesssystemjava.chess.ChessMatch;
 import com.gabrielcourse.chesssystemjava.chess.ChessPiece;
 import com.gabrielcourse.chesssystemjava.chess.ChessPosition;
+import com.gabrielcourse.chesssystemjava.chess.exceptions.ChessException;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Program {
@@ -15,19 +17,25 @@ public class Program {
         ChessMatch chessMatch = new ChessMatch();
 
         while (true) {
-            UI.printBoard(chessMatch.getPieces());
+            try {
+                UI.clearScreen();
+                UI.printBoard(chessMatch.getPieces());
 
-            System.out.println();
-            System.out.print("Source: ");
+                System.out.println();
+                System.out.print("Source: ");
 
-            ChessPosition source = UI.readChessPosition(scanner);
+                ChessPosition source = UI.readChessPosition(scanner);
 
-            System.out.println();
-            System.out.print("Target: ");
-            ChessPosition target = UI.readChessPosition(scanner);
-            System.out.println();
+                System.out.println();
+                System.out.print("Target: ");
+                ChessPosition target = UI.readChessPosition(scanner);
+                System.out.println();
 
-            ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
+                ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
+            } catch (ChessException | InputMismatchException e) {
+                System.out.println(e.getMessage());
+                scanner.nextLine();
+            }
         }
 
 //            scanner.close();
