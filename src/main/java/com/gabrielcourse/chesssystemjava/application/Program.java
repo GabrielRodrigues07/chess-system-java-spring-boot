@@ -5,8 +5,7 @@ import com.gabrielcourse.chesssystemjava.chess.ChessPiece;
 import com.gabrielcourse.chesssystemjava.chess.ChessPosition;
 import com.gabrielcourse.chesssystemjava.chess.exceptions.ChessException;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Program {
 
@@ -15,11 +14,12 @@ public class Program {
         Scanner scanner = new Scanner(System.in);
 
         ChessMatch chessMatch = new ChessMatch();
+        List<ChessPiece> captured = new ArrayList<>();
 
         while (true) {
             try {
                 UI.clearScreen();
-                UI.printMatch(chessMatch);
+                UI.printMatch(chessMatch, captured);
 
                 System.out.println();
                 System.out.print("Source: ");
@@ -36,6 +36,10 @@ public class Program {
                 System.out.println();
 
                 ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
+                if (Objects.nonNull(capturedPiece)) {
+                    captured.add(capturedPiece);
+                }
+
             } catch (ChessException | InputMismatchException e) {
                 System.out.println(e.getMessage());
                 scanner.nextLine();
