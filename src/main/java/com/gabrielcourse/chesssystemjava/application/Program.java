@@ -42,7 +42,11 @@ public class Program {
 
                 if (Objects.nonNull(chessMatch.getPromoted())) {
                     System.out.print("Enter piece for promotion (B/N/R/Q): ");
-                    String type = scanner.nextLine();
+                    String type = scanner.nextLine().toUpperCase();
+                    while (!"B".equalsIgnoreCase(type) && !"N".equalsIgnoreCase(type) && !"R".equalsIgnoreCase(type) && !"Q".equalsIgnoreCase(type)) {
+                        System.out.print("Invalid value! Enter piece for promotion (B/N/R/Q): ");
+                        type = scanner.nextLine().toUpperCase();
+                    }
                     chessMatch.replacePromotedPiece(type);
                 }
 
